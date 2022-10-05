@@ -29,7 +29,7 @@ public class UsuarioService {
     }
 
     public UsuarioModel alterar(UsuarioModel usuarioModel) {
-        usuarioRepository.save(usuarioModel);
+        return usuarioRepository.save(usuarioModel);
     }
 
     public void deletar(Long id) {
