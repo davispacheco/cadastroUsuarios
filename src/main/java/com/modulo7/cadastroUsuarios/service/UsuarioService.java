@@ -5,6 +5,7 @@ import com.modulo7.cadastroUsuarios.DTO.UsuarioRespostaDTO;
 import com.modulo7.cadastroUsuarios.model.UsuarioModel;
 import com.modulo7.cadastroUsuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,10 @@ import java.util.Optional;
 public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    private BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     public List<UsuarioRespostaDTO> buscarTodos() {
         List<UsuarioModel> usuarios = usuarioRepository.findAll();
@@ -25,6 +30,7 @@ public class UsuarioService {
     }
 
     public UsuarioModel cadastrar(UsuarioModel usuarioModel) {
+        usuarioModel.setSenha(passwordEncoder().encode(usuarioModel.getSenha()));
         return usuarioRepository.save(usuarioModel);
     }
 
